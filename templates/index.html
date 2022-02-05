@@ -1,17 +1,40 @@
 {% extends "wrapper.html" %}
 
 {% block main %}
+<div class="container">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul class=flashes>
+    <div class="row">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <div class="alert alert-success" role="alert"><span>{{ message }}</span></div>
         {% endfor %}
-    </ul>
+    </div>
     {% endif %}
     {% endwith %}
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit">
-    </form>
+
+    <div class="row">
+        <div class="col">
+            <h3>Convert your html, css and javascript to a shareable .exe file. Web server included.</h3>
+            <p>...</p>
+            <ol>
+                <li>Go into the folder containing your code, select all files, right-click and click &quot;Compress to Zip File&quot;</li>
+                <li>Upload and convert.</li>
+                <li>Download and run</li>
+                <li>...</li>
+                <li>Profit!</li>
+            </ol>
+        </div>
+        <div class="col">
+            <form method="post" enctype="multipart/form-data">
+                <div class="input-group"><input class="form-control" type="file" name="file" /></div><button class="btn btn-primary" type="submit">Convert</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h6>WARNING: Make that your zip file has index.html at it&#39;s root.</h6>
+            <h6>Disclaimer: This is not a very well done project. I accept no responsibility for the anything you upload or download from this site</h6>
+        </div>
+    </div>
+</div>
 {% endblock %}

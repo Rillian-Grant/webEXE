@@ -1,5 +1,16 @@
 {% extends "wrapper.html" %}
 
 {% block main %}
-    <a href="/{{id}}/download">Download</a>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h1>Your file is ready.</h1>
+                <p>Your file will be deleted in 24 hours</p>
+
+                <a href="/{{id}}/download">
+                    <button class="btn btn-primary" type="button">Download</button>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

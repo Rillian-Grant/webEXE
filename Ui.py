@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SESSION_TYPE'] = 'filesystem'
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -26,7 +27,7 @@ def is_hex(s):
 def index():
     if request.method == 'GET':
         return render_template('index.html')
-    if request.method == 'POST':
+    elif request.method == 'POST':
         if 'file' not in request.files:
             flash('No file selected!')
             return redirect("/")
@@ -39,6 +40,12 @@ def index():
             file.save(os.path.join(UPLOAD_FOLDER, file_id + ".notouch"))
             shutil.move(os.path.join(UPLOAD_FOLDER, file_id + ".notouch"), os.path.join(UPLOAD_FOLDER, file_id))
             return redirect("/" + file_id)
+        else:
+            flash("Error please make sure the file is valid")
+            return redirect("/")
+    else:
+        flash("Weird request problem. Check your files and try again")
+        return redirect("/")
 
 @app.route("/<id>")
 def job(id):

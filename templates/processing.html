@@ -1,5 +1,11 @@
 {% extends "wrapper.html" %}
 
+{% block head %}
+<meta http-equiv="refresh" content="5">
+{% endblock %}
+
 {% block main %}
-    <h1>Processing</h1>
+    <div class="container">
+        <h1>Processing <span class="spinner-grow" role="status"></span></h1>
+    </div>
 {% endblock %}

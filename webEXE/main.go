@@ -14,18 +14,23 @@ import (
 //go:embed www
 var embeddedFiles embed.FS
 
+//go:embed logo.txt
+var logo string
+
 var PORT string = "8080"
 
 func main() {
+	print(logo)
+
 	r := http.NewServeMux()
 
 	embeddedFiles, err := fs.Sub(embeddedFiles, "www")
 	if err != nil {
-		panic(err)
+		exit(err)
 	}
 	r.Handle("/", http.FileServer(http.FS(embeddedFiles)))
 
-	log.Println("Opening socket")
+	log.Println("Starting server on port " + PORT)
 	l, err := net.Listen("tcp", "localhost:"+PORT)
 	if err != nil {
 		log.Fatal(err)
@@ -34,11 +39,20 @@ func main() {
 	log.Println("Opening browser")
 	openBrowser("http://localhost:" + PORT)
 
-	log.Println("Starting server")
+	log.Println("Server started. Press Ctrl+C to exit")
 	err = http.Serve(l, r)
 	if err != nil {
-		panic(err)
+		exit(err)
 	}
+}
+
+func exit(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("\nPress any key to exit")
+	fmt.Scanln()
+	panic(err)
 }
 
 func openBrowser(url string) {
@@ -55,7 +69,7 @@ func openBrowser(url string) {
 		err = fmt.Errorf("unsupported platform")
 	}
 	if err != nil {
-		log.Fatal(err)
+		exit(err)
 	}
 
 }
