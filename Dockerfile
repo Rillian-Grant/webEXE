@@ -9,9 +9,10 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 RUN pip3 install --no-cache honcho
 RUN pip3 install --no-cache gunicorn
 
-COPY . .
-
+COPY requirements.txt .
 RUN pip3 install -r requirements.txt
+
+COPY . .
 
 EXPOSE 5200
 

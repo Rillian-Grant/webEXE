@@ -19,6 +19,7 @@ def main():
         files.sort(key=lambda x: os.path.getctime(os.path.join(QUEUE_DIR, x)))
         files = list(filter(lambda x: not x.endswith(".done"), files))
         files = list(filter(lambda x: not x.endswith(".notouch"), files))
+        files = list(filter(lambda x: not x == ".keep", files))
 
         if len(files) > 0: 
             print(files)
